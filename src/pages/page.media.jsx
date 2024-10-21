@@ -19,7 +19,7 @@ export default function Media() {
     if (res.status === 200) {
       setImages(res.metadata)
     }
-  }
+  }s
   // Modal handlers
   const handleCreateModalOpen = () => setOpenCreateModal(true);
   const handleCreateModalClose = () => setOpenCreateModal(false);
