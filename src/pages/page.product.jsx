@@ -6,6 +6,22 @@ import { getProduct, createProduct, updateProduct, deleteProduct } from '../serv
 import { getCategories } from '../services/service.category';
 import ImagePickerModal from '../components/admin.modal.select.image';
 
+const colors = [
+  { code: "bg-[#333333]", hex: "#333333" },
+  { code: "bg-[#2C3E50]", hex: "#2C3E50" },
+  { code: "bg-[#3B5323]", hex: "#3B5323" },
+  { code: "bg-[#4682B4]", hex: "#4682B4" },
+  { code: "bg-[#2F4F4F]", hex: "#2F4F4F" },
+  { code: "bg-[#8A3324]", hex: "#8A3324" },
+  { code: "bg-[#722F37]", hex: "#722F37" },
+  { code: "bg-[#2E4E3F]", hex: "#2E4E3F" },
+  { code: "bg-[#2A3439]", hex: "#2A3439" },
+  { code: "bg-[#505050]", hex: "#505050" },
+  { code: "bg-[#000000]", hex: "#000000" },
+  { code: "bg-[#ffffff]", hex: "#ffffff" },
+
+]
+
 export default function ProductManager() {
   const [products, setProducts] = useState([])
   const [openModal, setOpenModal] = useState(false);
@@ -13,28 +29,46 @@ export default function ProductManager() {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [categories, setCategories] = useState([])
   const [isModalImagePickerOpen, setModalImagePickerOpen] = useState(false);
+  const [currentTypeSelectImage, setCurrentTypeSelectImage] = useState('main')
+  // Product form state
+  const [form, setForm] = useState({
+    product_name: '',
+    product_price: '',
+    product_description: '',
+    product_list_categories: [],
+    product_images: [],
+    product_colors: [],
+    product_color_images: []
+  });
   useEffect(() => {
     fetchCategories()
     fetchAllProduct()
   }, [])
+  useEffect(() => {
+    if (form?.product_images.length > 0) {
+      const copyProductColorImages = [...form.product_color_images]
+      copyProductColorImages[0] = form.product_images[0]
+      setForm({ ...form, product_color_images: copyProductColorImages })
+    }
+    else {
+      if (form.product_color_images.length > 0) {
+        const copyProductColorImages = [...form.product_color_images]
+        copyProductColorImages.shift()
+        setForm({ ...form, product_color_images: copyProductColorImages })
+      }
+    }
+  }, [form.product_images])
   const fetchAllProduct = async () => {
     const data = await getProduct()
     setProducts(data)
   }
   const fetchCategories = async () => {
     const data = await getCategories()
-    if (data.status === 200) {
+    if (data?.status === 200) {
       setCategories(data.metadata)
     }
   }
-  // Product form state
-  const [form, setForm] = useState({
-    product_name: '',
-    product_price: '',
-    product_description: '',
-    product_category_name: '',
-    product_images: []
-  });
+
 
   // Handle modal open/close
   const handleOpen = () => {
@@ -47,7 +81,7 @@ export default function ProductManager() {
 
   // Reset form state
   const resetForm = () => {
-    setForm({ name: '', price: '', description: '', category: '', product_images: [] });
+    setForm({ product_name: '', product_price: '', product_description: '', product_list_categories: [], product_images: [], product_colors: [], product_color_images: [] });
     setIsEditing(false);
     setCurrentProduct(null);
   };
@@ -93,9 +127,29 @@ export default function ProductManager() {
     }
   };
   const handleSelectImages = (images) => {
-    setForm({ ...form, product_images: images });;
+    setForm({ ...form, product_images: images })
   };
+  const handleSelectColorImages = (images) => {
+    setForm({ ...form, product_color_images: images })
 
+  }
+  const handleSelectCategory = (ctg) => {
+    if (form.product_list_categories.includes(ctg)) {
+      setForm({ ...form, product_list_categories: form.product_list_categories.filter((el) => el !== ctg) })
+    }
+    else {
+      setForm({ ...form, product_list_categories: [...form.product_list_categories, ctg] })
+    }
+
+  }
+  const handleSelectColor = (color) => {
+    if (form.product_colors.includes(color)) {
+      setForm({ ...form, product_colors: form.product_colors.filter((el) => el !== color) })
+    } else {
+      setForm({ ...form, product_colors: [...form.product_colors, color] })
+    }
+  }
+  console.log(form.product_color_images)
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Product Manager</h1>
@@ -107,12 +161,12 @@ export default function ProductManager() {
 
       {/* Product List */}
       <div className="mt-4">
-        {products.length > 0 ? (
+        {products?.length > 0 ? (
           <ul className="space-y-2">
-            {products.map(product => (
+            {products?.map(product => (
               <li key={product._id} className="flex justify-between items-center p-2 bg-gray-100 rounded">
                 <div>
-                  <span className="font-semibold">{product.product_name}</span> - ${product.product_price} ({product.product_category})
+                  <span className="font-semibold">{product.product_name}</span> - ${product.product_price}
                   <p>{product.product_description}</p>
                   <div className="grid grid-cols-6 gap-4 p-4">
                     {product.product_images.length > 0 && product.product_images.map((image, index) => (
@@ -179,23 +233,27 @@ export default function ProductManager() {
             rows={4}
           />
           {/* Category Select */}
-          <TextField
-            label="Category"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            name="product_category_name"
-            select
-            value={form.product_category_name}
-            onChange={handleChange}
-          >
+          <p className='font-bold py-2'>Choose categories</p>
+          <ul className='grid grid-cols-3 gap-2 items-center justify-center'>
             {categories.length > 0 && categories.map((category, inx) => (
-              <MenuItem key={inx} value={category.category_name}>
-                {category.category_name}
-              </MenuItem>
+              <li className={`border-2 cursor-pointer ${form.product_list_categories.includes(category.category_name) ? 'border-black' : 'border-gray-200'} `} key={inx}
+                onClick={() => handleSelectCategory(category.category_name)}
+              >{category.category_name}</li>
             ))}
-          </TextField>
-          {/* Image select */}
+          </ul>
+          {/* Color Select */}
+          <p className='font-bold py-2'>Choose colors</p>
+          <ul className='grid grid-cols-12 gap-1 items-center justify-center'>
+            {colors.map((color, inx) => (
+              <li className={`border-2 cursor-pointer ${form.product_colors.includes(color.hex) ? 'border-black' : 'border-gray-200'} ${color.code} w-8 h-5`} key={inx}
+                onClick={() => handleSelectColor(color.hex)}
+              ></li>
+            ))}
+          </ul>
+
+          {/* Image main select */}
+          <p className='font-bold py-2'>Choose main photo of the product</p>
+
           <div className="grid grid-cols-6 gap-4 p-4">
             {form.product_images.length > 0 && form.product_images.map((image, index) => (
               <div
@@ -207,16 +265,41 @@ export default function ProductManager() {
             ))}
           </div>
           <button
-            onClick={() => setModalImagePickerOpen(true)}
+            onClick={() => {
+              setModalImagePickerOpen(true)
+              setCurrentTypeSelectImage('main')
+            }}
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
           >
-            Open Image Picker
+            Open Image Main Picker
+          </button>
+          {/* Image color select */}
+          <p className='font-bold py-2'>Choose color image of the product</p>
+          <div className="grid grid-cols-6 gap-4 p-4">
+            {form.product_color_images.length > 0 && form.product_color_images.map((image, index) => (
+              <div
+                key={index}
+                className={`cursor-pointer p-2 border-2 rounded}`}
+              >
+                <img src={image} className="w-auto h-auto max-h-40 object-cover" />
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={() => {
+              setCurrentTypeSelectImage('color')
+              setModalImagePickerOpen(true)
+            }}
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          >
+            Open Image Color Picker
           </button>
           <ImagePickerModal
             open={isModalImagePickerOpen}
             onClose={() => setModalImagePickerOpen(false)}
-            onSelect={handleSelectImages}
-            selImages={form.product_images}
+            onSelect={currentTypeSelectImage === 'main' ? handleSelectImages : handleSelectColorImages}
+            selImages={currentTypeSelectImage === 'main' ? form.product_images : form.product_color_images}
+            colors={form.product_colors}
           />
         </DialogContent>
         <DialogActions>

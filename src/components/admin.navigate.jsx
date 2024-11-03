@@ -11,7 +11,7 @@ export default function Navigate() {
   return (
     <div className="h-auto w-60 bg-gray-100 shadow-md">
       <List component="nav" className="p-4">
-        <Link to="/" passHref>
+        <Link to="/" >
           <ListItem className="hover:bg-gray-200 rounded-lg">
             <ListItemIcon>
               <ShoppingCartIcon />
@@ -19,7 +19,7 @@ export default function Navigate() {
             <ListItemText primary="Products" />
           </ListItem>
         </Link>
-        <Link to="/category" passHref>
+        <Link to="/category" >
           <ListItem className="hover:bg-gray-200 rounded-lg">
             <ListItemIcon>
               <AccountCircleIcon />
@@ -27,7 +27,7 @@ export default function Navigate() {
             <ListItemText primary="Category" />
           </ListItem>
         </Link>
-        <Link to="/media" passHref>
+        <Link to="/media" >
           <ListItem className="hover:bg-gray-200 rounded-lg">
             <ListItemIcon>
               <SettingsIcon />

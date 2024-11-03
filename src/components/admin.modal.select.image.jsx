@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useImageContext } from '../context/context.media';
 import { getImgs } from '../services/service.media';
 
-export default function ImagePickerModal({ open, onClose, onSelect, selImages }) {
+export default function ImagePickerModal({ open, onClose, onSelect, selImages, colors }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [images, setImages] = useState([])
   const handleSelectImage = (image) => {
@@ -22,13 +22,13 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages })
   useEffect(() => {
     fetchImages()
     setSelectedImages(selImages)
-  }, [])
+  }, [selImages])
   const fetchImages = async () => {
     const res = await getImgs()
     setImages(res.metadata)
   }
 
-
+  console.log(colors)
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle className="flex justify-between items-center">
@@ -38,6 +38,13 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages })
         </IconButton>
       </DialogTitle>
       <DialogContent>
+        <p className='font-bold py-2'>Choose colors</p>
+        <ul className='grid grid-cols-12 gap-1 items-center justify-center'>
+          {colors.map((color, inx) => (
+            <li className={`border-2 cursor-pointer border-gray-200 ${color.code} w-8 h-5`}
+              key={inx}></li>
+          ))}
+        </ul>
         <div className="grid grid-cols-6 gap-4 p-4">
           {images.map((image, index) => (
             <div
