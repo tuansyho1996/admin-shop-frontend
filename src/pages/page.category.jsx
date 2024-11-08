@@ -8,12 +8,14 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState({
     category_name: '',
+    category_slug: '',
     category_description: '',
     category_parent: '',
   });
   const [editIndex, setEditIndex] = useState(null);
   const [editCategory, setEditCategory] = useState({
     category_name: '',
+    category_slug: '',
     category_description: '',
     category_parent: '',
   });
@@ -24,7 +26,7 @@ const Categories = () => {
       const res = await createCategory(newCategory)
       if (res.status === 201) {
         setCategories([{ ...res.metadata, category_parent: newCategory.category_parent }, ...categories]);
-        setNewCategory({ category_name: '', category_description: '', category_parent: '' });
+        setNewCategory({ category_name: '', category_description: '', category_parent: '', category_slug: '' });
       }
     }
   };
@@ -52,7 +54,7 @@ const Categories = () => {
       updatedCategories[editIndex] = { ...res.metadata, category_parent: editCategory.category_parent };
       setCategories(updatedCategories);
       setEditIndex(null);
-      setEditCategory({ category_name: '', category_description: '', category_parent: '' });
+      setEditCategory({ category_name: '', category_description: '', category_parent: '', category_slug: '' });
     }
   };
 
@@ -77,7 +79,13 @@ const Categories = () => {
           onChange={(e) => setNewCategory({ ...newCategory, category_name: e.target.value })}
           variant="outlined"
         />
-
+        {/* Slug */}
+        <TextField
+          label="Category Slug"
+          value={newCategory.category_slug}
+          onChange={(e) => setNewCategory({ ...newCategory, category_slug: e.target.value })}
+          variant="outlined"
+        />
 
         {/* Parent Category */}
         <FormControl fullWidth>
@@ -90,8 +98,8 @@ const Categories = () => {
           >
             <MenuItem value="">None</MenuItem>
             {categories.map((cat, idx) => (
-              <MenuItem key={idx} value={cat.category_name}>
-                {cat.category_name}
+              <MenuItem key={idx} value={cat.category_slug}>
+                {cat.category_slug}
               </MenuItem>
             ))}
           </Select>
@@ -126,7 +134,13 @@ const Categories = () => {
                   onChange={(e) => setEditCategory({ ...editCategory, category_name: e.target.value })}
                   variant="outlined"
                 />
-
+                {/* Edit slug */}
+                <TextField
+                  label="Category Slug"
+                  value={editCategory.category_slug}
+                  onChange={(e) => setEditCategory({ ...editCategory, category_slug: e.target.value })}
+                  variant="outlined"
+                />
 
                 {/* Edit Parent Category */}
                 <FormControl fullWidth>
@@ -137,8 +151,8 @@ const Categories = () => {
                   >
                     <MenuItem value="">None</MenuItem>
                     {categories.filter(cat => cat._id !== category._id).map((cat, idx) => (
-                      <MenuItem key={idx} value={cat.category_name}>
-                        {cat.category_name}
+                      <MenuItem key={idx} value={cat.category_slug}>
+                        {cat.category_slug}
                       </MenuItem>
                     ))}
                   </Select>
@@ -168,6 +182,7 @@ const Categories = () => {
             <div className="w-full flex justify-between items-center">
               <div>
                 <h3 className="font-semibold text-lg uppercase">{category.category_name}</h3>
+                <p>slug: {category.category_slug}</p>
                 <p>Description: {category.category_description}</p>
                 {category.category_parent && <p className="text-gray-600">Parent: {category.category_parent}</p>}
               </div>

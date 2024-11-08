@@ -236,9 +236,9 @@ export default function ProductManager() {
           <p className='font-bold py-2'>Choose categories</p>
           <ul className='grid grid-cols-3 gap-2 items-center justify-center'>
             {categories.length > 0 && categories.map((category, inx) => (
-              <li className={`border-2 cursor-pointer ${form.product_list_categories.includes(category.category_name) ? 'border-black' : 'border-gray-200'} `} key={inx}
-                onClick={() => handleSelectCategory(category.category_name)}
-              >{category.category_name}</li>
+              <li className={`border-2 cursor-pointer ${form.product_list_categories.includes(category.category_slug) ? 'border-black' : 'border-gray-200'} `} key={inx}
+                onClick={() => handleSelectCategory(category.category_slug)}
+              >{category.category_slug}</li>
             ))}
           </ul>
           {/* Color Select */}

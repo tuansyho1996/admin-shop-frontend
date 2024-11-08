@@ -95,13 +95,16 @@ export default function Media() {
       <div className="grid grid-cols-12 gap-4 gap-4 mt-6">
         {images?.length === 0 && <Typography>No images uploaded yet.</Typography>}
         {images?.map((image) => (
-          <div key={image._id} className="relative group">
-            <img src={image.media_path} className="w-auto h-auto max-h-40 rounded" />
-            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex justify-center items-center">
-              <IconButton color="secondary" onClick={() => handleDeleteModalOpen(image)}>
-                <DeleteIcon />
-              </IconButton>
+          <div>
+            <div key={image._id} className="relative group">
+              <img src={image.media_path} className="w-auto h-auto max-h-40 rounded" />
+              <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex justify-center items-center">
+                <IconButton color="secondary" onClick={() => handleDeleteModalOpen(image)}>
+                  <DeleteIcon />
+                </IconButton>
+              </div>
             </div>
+            <input value={image.media_path} />
           </div>
         ))}
       </div>
