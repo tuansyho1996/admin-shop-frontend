@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { TextField, Button, IconButton, Paper, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import { createCategory, getCategories, updateCategory, deleteCategory } from '../services/service.category';
+import ImagePickerModal from '../components/admin.modal.select.image';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -11,6 +12,7 @@ const Categories = () => {
     category_slug: '',
     category_description: '',
     category_parent: '',
+    category_image: []
   });
   const [editIndex, setEditIndex] = useState(null);
   const [editCategory, setEditCategory] = useState({
@@ -18,15 +20,29 @@ const Categories = () => {
     category_slug: '',
     category_description: '',
     category_parent: '',
+    category_image: []
   });
+  const [isModalImagePickerOpen, setModalImagePickerOpen] = useState(false)
 
+  const handleChangeNewSelImage = (images) => {
+    setNewCategory({
+      ...newCategory,
+      category_image: images
+    })
+  }
+  const handleChangeEditSelImage = (images) => {
+    setEditCategory({
+      ...editCategory,
+      category_image: images
+    })
+  }
   // Add a new category
   const addCategory = async () => {
     if (newCategory.category_name && newCategory.category_description) {
       const res = await createCategory(newCategory)
       if (res.status === 201) {
         setCategories([{ ...res.metadata, category_parent: newCategory.category_parent }, ...categories]);
-        setNewCategory({ category_name: '', category_description: '', category_parent: '', category_slug: '' });
+        setNewCategory({ category_name: '', category_description: '', category_parent: '', category_slug: '', category_image: [] });
       }
     }
   };
@@ -53,7 +69,7 @@ const Categories = () => {
       const updatedCategories = [...categories];
       updatedCategories[editIndex] = { ...res.metadata, category_parent: editCategory.category_parent };
       setCategories(updatedCategories);
-      setEditIndex(null);
+      setEditIndex(null)
       setEditCategory({ category_name: '', category_description: '', category_parent: '', category_slug: '' });
     }
   };
@@ -67,6 +83,7 @@ const Categories = () => {
       setCategories(res.metadata)
     }
   }
+  console.log(newCategory.category_image)
   console.log(categories)
   return (
     <div className="p-8 w-full">
@@ -104,7 +121,6 @@ const Categories = () => {
             ))}
           </Select>
         </FormControl>
-
       </div>
       {/* Description */}
 
@@ -117,7 +133,31 @@ const Categories = () => {
         rows={4}
         className='w-full !mb-4'
       />
-      <Button variant="contained" onClick={addCategory} className="">
+      {
+        newCategory.category_image.length > 0 &&
+        newCategory.category_image.map((el, index) =>
+        (
+          <>
+            <img src={el} width={200} key={index} />
+          </>
+        )
+        )
+      }
+      <button
+        onClick={() => {
+          setModalImagePickerOpen(true)
+        }}
+        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+      >
+        Open Image Picker
+      </button>
+      <ImagePickerModal
+        open={isModalImagePickerOpen}
+        onClose={() => setModalImagePickerOpen(false)}
+        selImages={newCategory.category_image}
+        onSelect={handleChangeNewSelImage}
+      />
+      <Button variant="contained" onClick={addCategory} className="" sx={{ marginLeft: '10px' }}>
         Add Category
       </Button>
 
@@ -168,7 +208,33 @@ const Categories = () => {
                 rows={4}
                 className='w-full !my-4'
               />
-              <div className='flex'>
+              <div>
+                {
+                  editCategory.category_image.length > 0 &&
+                  editCategory.category_image.map((el, index) =>
+                  (
+                    <>
+                      <img src={el} width={200} key={index} />
+                    </>
+                  )
+                  )
+                }
+                <button
+                  onClick={() => {
+                    setModalImagePickerOpen(true)
+                  }}
+                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 my-2"
+                >
+                  Open Edit Image Picker
+                </button>
+                <ImagePickerModal
+                  open={isModalImagePickerOpen}
+                  onClose={() => setModalImagePickerOpen(false)}
+                  selImages={editCategory.category_image}
+                  onSelect={handleChangeEditSelImage}
+                />
+              </div>
+              <div className='flex gap-2  '>
                 <Button variant="contained" onClick={handleUpdateCategory}>
                   Update
                 </Button>
@@ -184,7 +250,17 @@ const Categories = () => {
                 <h3 className="font-semibold text-lg uppercase">{category.category_name}</h3>
                 <p>slug: {category.category_slug}</p>
                 <p>Description: {category.category_description}</p>
-                {category.category_parent && <p className="text-gray-600">Parent: {category.category_parent}</p>}
+                {category.category_parent && <p className="">Parent: {category.category_parent}</p>}
+                {
+                  category.category_image.length > 0 &&
+                  category.category_image.map((el, index) =>
+                  (
+                    <>
+                      <img src={el} width={200} key={index} />
+                    </>
+                  )
+                  )
+                }
               </div>
               <div className="flex space-x-2">
                 <IconButton onClick={() => startEditCategory(index)}>

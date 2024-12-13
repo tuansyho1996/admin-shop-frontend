@@ -32,8 +32,29 @@ const deleteCategory = async (id) => {
     console.error(error)
   }
 }
+const getTopCategories = async () => {
+  try {
+    const res = await axios.get(`/api/category/top-category`)
+    if (res.data.status !== 200) {
+      return null
+    } else {
+      return res.data.metadata
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+const updateTopCategories = async (data) => {
+  try {
+    const res = await axios.put(`/api/category/top-category`, data)
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
+}
 export {
   getCategories,
   createCategory,
-  updateCategory, deleteCategory
+  updateCategory, deleteCategory, getTopCategories,
+  updateTopCategories
 }

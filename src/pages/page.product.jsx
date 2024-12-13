@@ -164,12 +164,12 @@ export default function ProductManager() {
         {products?.length > 0 ? (
           <ul className="space-y-2">
             {products?.map(product => (
-              <li key={product._id} className="flex justify-between items-center p-2 bg-gray-100 rounded">
+              <li key={product._id} className="flex justify-between items-center p-2 rounded">
                 <div>
                   <span className="font-semibold">{product.product_name}</span> - ${product.product_price}
                   <p>{product.product_description}</p>
                   <div className="grid grid-cols-6 gap-4 p-4">
-                    {product.product_images.length > 0 && product.product_images.map((image, index) => (
+                    {product.product_images.length > 0 && product.product_images?.map((image, index) => (
                       <div
                         key={index}
                         className={`cursor-pointer p-2 border-2 rounded}`}
@@ -180,10 +180,10 @@ export default function ProductManager() {
                   </div>
                 </div>
                 <div className="space-x-2">
-                  <IconButton onClick={() => editProduct(product)}>
+                  <IconButton onClick={() => editProduct(product)} color='primary'>
                     <Edit />
                   </IconButton>
-                  <IconButton onClick={() => handleDeleteProduct(product._id)}>
+                  <IconButton onClick={() => handleDeleteProduct(product._id)} color='error'>
                     <Delete />
                   </IconButton>
                 </div>

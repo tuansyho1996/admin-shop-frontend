@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useImageContext } from '../context/context.media';
 import { getImgs } from '../services/service.media';
 
-export default function ImagePickerModal({ open, onClose, onSelect, selImages, colors }) {
+export default function ImagePickerModal({ open, onClose, onSelect, selImages = [], colors = [] }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [images, setImages] = useState([])
   const handleSelectImage = (image) => {
@@ -22,7 +22,7 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages, c
   useEffect(() => {
     fetchImages()
     setSelectedImages(selImages)
-  }, [selImages])
+  }, [])
   const fetchImages = async () => {
     const res = await getImgs()
     setImages(res.metadata)
@@ -40,7 +40,7 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages, c
       <DialogContent>
         <p className='font-bold py-2'>Choose colors</p>
         <ul className='grid grid-cols-12 gap-1 items-center justify-center'>
-          {colors.map((color, inx) => (
+          {colors.length > 0 && colors.map((color, inx) => (
             <li className={`border-2 cursor-pointer border-gray-200 ${color.code} w-8 h-5`}
               key={inx}></li>
           ))}

@@ -9,10 +9,10 @@ import { Link } from 'react-router-dom';
 
 export default function Navigate() {
   return (
-    <div className="h-auto w-60 bg-gray-100 shadow-md">
+    <div className="h-auto w-60  shadow-md">
       <List component="nav" className="p-4">
         <Link to="/" >
-          <ListItem className="hover:bg-gray-200 rounded-lg">
+          <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
               <ShoppingCartIcon />
             </ListItemIcon>
@@ -20,7 +20,7 @@ export default function Navigate() {
           </ListItem>
         </Link>
         <Link to="/category" >
-          <ListItem className="hover:bg-gray-200 rounded-lg">
+          <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
@@ -28,11 +28,19 @@ export default function Navigate() {
           </ListItem>
         </Link>
         <Link to="/media" >
-          <ListItem className="hover:bg-gray-200 rounded-lg">
+          <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
             <ListItemText primary="Media" />
+          </ListItem>
+        </Link>
+        <Link to="/top-category" >
+          <ListItem className="hover:bg-gray-600 rounded-lg">
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Top category" />
           </ListItem>
         </Link>
       </List>
