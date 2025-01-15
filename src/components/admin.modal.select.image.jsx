@@ -19,10 +19,14 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages = 
     onSelect(selectedImages);
     onClose();
   };
+  const handleClearSelection = () => {
+    setSelectedImages([]);
+  }
+
   useEffect(() => {
     fetchImages()
     setSelectedImages(selImages)
-  }, [])
+  }, [selImages])
   const fetchImages = async () => {
     const res = await getImgs()
     setImages(res.metadata)
@@ -37,12 +41,31 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages = 
           <CloseIcon />
         </IconButton>
       </DialogTitle>
+      <div className="flex justify-end mt-4 mx-auto">
+        <button
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          onClick={handleConfirmSelection}
+        >
+          Confirm Selection
+        </button>
+      </div>
+      <div className="flex justify-end mt-4 mx-auto">
+        <button
+          className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          onClick={handleClearSelection}
+        >
+          Clear
+        </button>
+      </div>
       <DialogContent>
         <p className='font-bold py-2'>Choose colors</p>
         <ul className='grid grid-cols-12 gap-1 items-center justify-center'>
           {colors.length > 0 && colors.map((color, inx) => (
-            <li className={`border-2 cursor-pointer border-gray-200 ${color.code} w-8 h-5`}
-              key={inx}></li>
+            <div className='flex flex-col items-center' key={inx}>
+              <li className={`border-2 cursor-pointer border-gray-200 bg-[${color}] w-8 h-5`}></li>
+              <p className='text-xs'>{color}</p>
+            </div>
+
           ))}
         </ul>
         <div className="grid grid-cols-6 gap-4 p-4">
@@ -57,14 +80,7 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages = 
             </div>
           ))}
         </div>
-        <div className="flex justify-end mt-4">
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            onClick={handleConfirmSelection}
-          >
-            Confirm Selection
-          </button>
-        </div>
+
       </DialogContent>
     </Dialog>
   );

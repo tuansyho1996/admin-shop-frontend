@@ -47,7 +47,24 @@ const getTopCategories = async () => {
 const updateTopCategories = async (data) => {
   try {
     const res = await axios.put(`/api/category/top-category`, data)
-    return res.data
+    if (res.data.status !== 200) {
+      return null
+    } else {
+      return res.data.metadata
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+const deleteTopCategory = async (_id) => {
+  try {
+    console.log('check delete')
+    const res = await axios.delete(`/api/category/top-category/${_id}`)
+    if (res.data.status !== 200) {
+      return null
+    } else {
+      return res.data.metadata
+    }
   } catch (error) {
     console.error(error)
   }
@@ -56,5 +73,5 @@ export {
   getCategories,
   createCategory,
   updateCategory, deleteCategory, getTopCategories,
-  updateTopCategories
+  updateTopCategories, deleteTopCategory
 }

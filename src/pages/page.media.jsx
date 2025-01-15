@@ -50,7 +50,7 @@ export default function Media() {
       if (fileInput) {
         const res = await uploadImageToS3(fileInput)
         if (res?.status === 201) {
-          setImages((prevImages) => [...prevImages, res.metadata]);
+          setImages((prevImages) => [res.metadata, ...prevImages]);
           handleCreateModalClose();
         }
       }
@@ -60,7 +60,7 @@ export default function Media() {
       if (fileImages) {
         const res = await uploadManyImage(fileImages)
         if (res?.status === 201) {
-          setImages((prevImages) => [...prevImages, ...res.metadata]);
+          setImages((prevImages) => [...res.metadata, ...prevImages]);
           handleCreateModalClose();
         }
       }

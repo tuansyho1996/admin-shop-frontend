@@ -243,11 +243,15 @@ export default function ProductManager() {
           </ul>
           {/* Color Select */}
           <p className='font-bold py-2'>Choose colors</p>
-          <ul className='grid grid-cols-12 gap-1 items-center justify-center'>
+          <ul className='grid grid-cols-6 gap-1 items-center justify-center'>
             {colors.map((color, inx) => (
-              <li className={`border-2 cursor-pointer ${form.product_colors.includes(color.hex) ? 'border-black' : 'border-gray-200'} ${color.code} w-8 h-5`} key={inx}
-                onClick={() => handleSelectColor(color.hex)}
-              ></li>
+              <div className='flex flex-col items-center justify-center '>
+                <li className={`border-2 cursor-pointer ${form.product_colors.includes(color.hex) ? 'border-black' : 'border-gray-200'} ${color.code} w-16 h-5`} key={inx}
+                  onClick={() => handleSelectColor(color.hex)}
+                ></li>
+                <p className='text-xs'>{color.hex}</p>
+              </div>
+
             ))}
           </ul>
 

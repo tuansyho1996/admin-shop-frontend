@@ -10,6 +10,7 @@ const Categories = () => {
   const [newCategory, setNewCategory] = useState({
     category_name: '',
     category_slug: '',
+    category_level: 0,
     category_description: '',
     category_parent: '',
     category_image: []
@@ -18,6 +19,7 @@ const Categories = () => {
   const [editCategory, setEditCategory] = useState({
     category_name: '',
     category_slug: '',
+    category_level: 0,
     category_description: '',
     category_parent: '',
     category_image: []
@@ -46,6 +48,7 @@ const Categories = () => {
       }
     }
   };
+
 
   // Delete a category
   const handleDeleteCategory = async (index) => {
@@ -88,7 +91,7 @@ const Categories = () => {
   return (
     <div className="p-8 w-full">
       <h1 className="text-2xl font-bold mb-4">Category Manager</h1>
-      <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {/* Name */}
         <TextField
           label="Category Name"
@@ -101,6 +104,12 @@ const Categories = () => {
           label="Category Slug"
           value={newCategory.category_slug}
           onChange={(e) => setNewCategory({ ...newCategory, category_slug: e.target.value })}
+          variant="outlined"
+        />
+        <TextField
+          label="Category level"
+          value={newCategory.category_level}
+          onChange={(e) => setNewCategory({ ...newCategory, category_level: e.target.value })}
           variant="outlined"
         />
 
@@ -166,7 +175,7 @@ const Categories = () => {
         <div key={index} className="p-4 mt-4 w-full border border-gray-200">
           {editIndex === index ? (
             <div>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 w-full">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 w-full">
                 {/* Edit Name */}
                 <TextField
                   label="Category Name"
@@ -181,7 +190,12 @@ const Categories = () => {
                   onChange={(e) => setEditCategory({ ...editCategory, category_slug: e.target.value })}
                   variant="outlined"
                 />
-
+                <TextField
+                  label="Category Level"
+                  value={editCategory.category_level}
+                  onChange={(e) => setEditCategory({ ...editCategory, category_level: e.target.value })}
+                  variant="outlined"
+                />
                 {/* Edit Parent Category */}
                 <FormControl fullWidth>
                   <InputLabel>Parent Category</InputLabel>
