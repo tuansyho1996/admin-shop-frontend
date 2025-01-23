@@ -41,6 +41,14 @@ const deleteImg = async (name) => {
     console.error(error)
   }
 }
+const deleteMultipleImages = async (name) => {
+  try {
+    const res = await axios.delete(`/api/media/multiple`)
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 export {
   uploadManyImage,

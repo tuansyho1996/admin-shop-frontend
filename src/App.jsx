@@ -7,6 +7,7 @@ import Category from './pages/page.category';
 import Media from './pages/page.media';
 import TopCategoriesManager from './pages/page.top.category';
 import './App.css'
+import { ToastContainer } from 'react-toastify';
 
 export default function App() {
 
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/top-category" element={<TopCategoriesManager />} />
         {/* Catch-all route for 404 */}
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

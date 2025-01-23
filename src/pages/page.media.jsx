@@ -3,13 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Box, Button, Typography, IconButton } from '@mui/material';
 import { Add as AddIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { uploadImageToS3, getImgs, deleteImg, uploadManyImage } from '../services/service.media';
+import { toast } from 'react-toastify';
 
 export default function Media() {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openDeleteMultipleModal, setOpenDeleteMultipleModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [images, setImages] = useState([]);
   const [isUploadMany, setIsUploadMany] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   //Fetch Images
   useEffect(() => {
@@ -75,7 +78,25 @@ export default function Media() {
       setOpenDeleteModal(false);
     }
   };
-
+  const handleCopy = (url) => {
+    navigator.clipboard.writeText(url)
+    toast.success('Image url copied to clipboard')
+  }
+  const handleCheckboxChange = (item) => {
+    if (selectedItems.includes(item)) {
+      setSelectedItems(selectedItems.filter((i) => i !== item));
+    } else {
+      setSelectedItems([...selectedItems, item]);
+    }
+  };
+  const handleDeleteMultipleImage = async () => {
+    const res = await deleteImg(selectedItems)
+    if (res.status === 200) {
+      setImages(images.filter((img) => !selectedItems.includes(img.media_name)));
+      setOpenDeleteMultipleModal(false);
+    }
+  };
+  console.log(selectedItems)
   return (
     <div className="p-6">
       <Typography variant="h4" gutterBottom>
@@ -90,12 +111,24 @@ export default function Media() {
       <Button variant="contained" sx={{ marginLeft: '10px' }} startIcon={<AddIcon />} onClick={() => handleCreateModalOpen('upload multiple')}>
         Upload Many Image
       </Button>
+      {/* Delete many Image */}
+      <Button variant="contained" sx={{ marginLeft: '10px' }} onClick={() => setOpenDeleteMultipleModal(true)}>
+        Delete many Image
+      </Button>
 
       {/* List of Images */}
       <div className="grid grid-cols-12 gap-4 gap-4 mt-6">
         {images?.length === 0 && <Typography>No images uploaded yet.</Typography>}
         {images?.map((image) => (
           <div>
+            <input
+              type="checkbox"
+              id={image.media_name}
+              value={image.name}
+              checked={selectedItems.includes(image.media_name)}
+              onChange={() => handleCheckboxChange(image.media_name)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+            />
             <div key={image._id} className="relative group">
               <img src={image.media_path} className="w-auto h-auto max-h-40 rounded" />
               <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex justify-center items-center">
@@ -104,7 +137,13 @@ export default function Media() {
                 </IconButton>
               </div>
             </div>
-            <input value={image.media_path} />
+            <input value={image.media_path} hidden />
+            <button
+              onClick={() => handleCopy(image.media_path)}
+              className="px-2 py-1 mt-1 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            >
+              Copy url
+            </button>
           </div>
         ))}
       </div>
@@ -171,6 +210,26 @@ export default function Media() {
               variant="contained"
               color="secondary"
               onClick={handleDeleteImage}
+            >
+              Delete
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+      <Modal open={openDeleteMultipleModal} onClose={() => setOpenDeleteMultipleModal(false)}>
+        <Box className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-lg w-full max-w-md">
+          <Typography variant="h6" gutterBottom>
+            Confirm Deletion
+          </Typography>
+          <Typography>
+            Are you sure you want to delete the image <strong>{selectedImage?.name}</strong>?
+          </Typography>
+          <div className="flex justify-end space-x-4 mt-4">
+            <Button onClick={() => setOpenDeleteMultipleModal(false)}>Cancel</Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleDeleteMultipleImage}
             >
               Delete
             </Button>
