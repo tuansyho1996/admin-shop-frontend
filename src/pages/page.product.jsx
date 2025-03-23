@@ -96,7 +96,7 @@ export default function ProductManager() {
   const addProduct = async () => {
     const res = await createProduct(form)
     if (res.status === 201) {
-      setProducts([...products, { ...form, _id: res.metadata._id }])
+      setProducts([{ ...form, _id: res.metadata._id }, ...products])
       handleClose();
     }
   };
@@ -196,7 +196,7 @@ export default function ProductManager() {
       </div>
 
       {/* Product Modal */}
-      <Dialog open={openModal} onClose={handleClose}>
+      <Dialog open={openModal} onClose={() => setOpenModal(false)}>
         <DialogTitle>{isEditing ? 'Edit Product' : 'Add Product'}</DialogTitle>
         <DialogContent>
           {/* Name Input */}
