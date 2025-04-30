@@ -86,8 +86,6 @@ const Categories = () => {
       setCategories(res.metadata)
     }
   }
-  console.log(newCategory.category_image)
-  console.log(categories)
   return (
     <div className="p-8 w-full">
       <h1 className="text-2xl font-bold mb-4">Category Manager</h1>

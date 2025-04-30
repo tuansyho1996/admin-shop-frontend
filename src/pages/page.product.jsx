@@ -140,7 +140,6 @@ export default function ProductManager() {
     else {
       setForm({ ...form, product_list_categories: [...form.product_list_categories, ctg] })
     }
-
   }
   const handleSelectColor = (color) => {
     if (form.product_colors.includes(color)) {

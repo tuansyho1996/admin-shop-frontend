@@ -8,7 +8,8 @@ import Media from './pages/page.media';
 import TopCategoriesManager from './pages/page.top.category';
 import './App.css'
 import { ToastContainer } from 'react-toastify';
-
+import Reviews from './pages/page.reviews';
+import Orders from './pages/page.orders';
 export default function App() {
 
   return (
@@ -19,6 +20,8 @@ export default function App() {
         <Route path="/category" element={<Category />} />
         <Route path="/media" element={<Media />} />
         <Route path="/top-category" element={<TopCategoriesManager />} />
+        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/orders" element={<Orders />} />
         {/* Catch-all route for 404 */}
       </Routes>
       <ToastContainer />

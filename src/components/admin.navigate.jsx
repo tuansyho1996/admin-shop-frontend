@@ -43,6 +43,22 @@ export default function Navigate() {
             <ListItemText primary="Top category" />
           </ListItem>
         </Link>
+        <Link to="/reviews" >
+          <ListItem className="hover:bg-gray-600 rounded-lg">
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Reviews" />
+          </ListItem>
+        </Link>
+        <Link to="/orders" >
+          <ListItem className="hover:bg-gray-600 rounded-lg">
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Orders" />
+          </ListItem>
+        </Link>
       </List>
     </div>
   );
