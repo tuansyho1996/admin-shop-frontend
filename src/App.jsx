@@ -10,6 +10,7 @@ import './App.css'
 import { ToastContainer } from 'react-toastify';
 import Reviews from './pages/page.reviews';
 import Orders from './pages/page.orders';
+import Blog from './pages/page.blog';
 export default function App() {
 
   return (
@@ -22,7 +23,8 @@ export default function App() {
         <Route path="/top-category" element={<TopCategoriesManager />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/orders" element={<Orders />} />
-        {/* Catch-all route for 404 */}
+        <Route path="/blog" element={<Blog />} />
+        <Route path="*" element={<div>404 Not Found</div>} />  {/* Catch-all route for 404 */}
       </Routes>
       <ToastContainer />
     </div>

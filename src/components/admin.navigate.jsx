@@ -5,7 +5,13 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CategoryIcon from '@mui/icons-material/Category';
 import { Link } from 'react-router-dom';
+import MediaIcon from '@mui/icons-material/InsertLink';
+import TopCategoryIcon from '@mui/icons-material/AlignVerticalTop';
+import ReviewsIcon from '@mui/icons-material/Reviews';
+import OrderIcon from '@mui/icons-material/Checklist';
+import BlogIcon from '@mui/icons-material/Note';
 
 export default function Navigate() {
   return (
@@ -22,7 +28,7 @@ export default function Navigate() {
         <Link to="/category" >
           <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
-              <AccountCircleIcon />
+              <CategoryIcon />
             </ListItemIcon>
             <ListItemText primary="Category" />
           </ListItem>
@@ -30,7 +36,7 @@ export default function Navigate() {
         <Link to="/media" >
           <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
-              <SettingsIcon />
+              <MediaIcon />
             </ListItemIcon>
             <ListItemText primary="Media" />
           </ListItem>
@@ -38,7 +44,7 @@ export default function Navigate() {
         <Link to="/top-category" >
           <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
-              <SettingsIcon />
+              <TopCategoryIcon />
             </ListItemIcon>
             <ListItemText primary="Top category" />
           </ListItem>
@@ -46,7 +52,7 @@ export default function Navigate() {
         <Link to="/reviews" >
           <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
-              <SettingsIcon />
+              <ReviewsIcon />
             </ListItemIcon>
             <ListItemText primary="Reviews" />
           </ListItem>
@@ -54,9 +60,17 @@ export default function Navigate() {
         <Link to="/orders" >
           <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
-              <SettingsIcon />
+              <OrderIcon />
             </ListItemIcon>
             <ListItemText primary="Orders" />
+          </ListItem>
+        </Link>
+        <Link to="/blog" >
+          <ListItem className="hover:bg-gray-600 rounded-lg">
+            <ListItemIcon>
+              <BlogIcon />
+            </ListItemIcon>
+            <ListItemText primary="Blog" />
           </ListItem>
         </Link>
       </List>
