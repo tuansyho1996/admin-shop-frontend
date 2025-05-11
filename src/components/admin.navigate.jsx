@@ -65,12 +65,20 @@ export default function Navigate() {
             <ListItemText primary="Orders" />
           </ListItem>
         </Link>
-        <Link to="/blog" >
+        <Link to="/blogs" >
           <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
               <BlogIcon />
             </ListItemIcon>
-            <ListItemText primary="Blog" />
+            <ListItemText primary="Blogs" />
+          </ListItem>
+        </Link>
+        <Link to="/urls" >
+          <ListItem className="hover:bg-gray-600 rounded-lg">
+            <ListItemIcon>
+              <BlogIcon />
+            </ListItemIcon>
+            <ListItemText primary="Urls" />
           </ListItem>
         </Link>
       </List>

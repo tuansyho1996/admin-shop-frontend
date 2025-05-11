@@ -1,5 +1,4 @@
-import axios from '../utils/axios'
-
+import axios from "../utils/axios.blog.js";
 const createBlog = async (data) => {
     try {
         const res = await axios.post(`/api/blog`, data);
