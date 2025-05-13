@@ -11,7 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import Reviews from './pages/page.reviews';
 import Orders from './pages/page.orders';
 import Blog from './pages/page.blog';
-import Url from './pages/page.url';
+import Global from './pages/page.global';
 export default function App() {
 
   return (
@@ -25,7 +25,7 @@ export default function App() {
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/blogs" element={<Blog />} />
-        <Route path="/urls" element={<Url />} />
+        <Route path="/globals" element={<Global />} />
         <Route path="*" element={<div>404 Not Found</div>} />  {/* Catch-all route for 404 */}
       </Routes>
       <ToastContainer />
