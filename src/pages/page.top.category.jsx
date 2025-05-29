@@ -17,6 +17,7 @@ const TopCategoriesManager = () => {
         _id: '',
         top_ct_name: '',
         top_ct_categories: [],
+        top_ct_name_categories: [],
         top_ct_image: [],
     });
     const [modalConfirmDeleteOpen, setModalConfirmDeleteOpen] = useState(false);
@@ -58,6 +59,7 @@ const TopCategoriesManager = () => {
             top_ct_name: '',
             top_ct_categories: [],
             top_ct_image: [],
+            top_ct_name_categories: [],
         })
     }
     const handleSaveCategory = async () => {
@@ -71,17 +73,19 @@ const TopCategoriesManager = () => {
             top_ct_image: images
         })
     }
-    const handlePickCategory = (slug) => {
+    const handlePickCategory = (slug, name) => {
         if (formCategory.top_ct_categories.includes(slug)) {
             setFormCategory({
                 ...formCategory,
-                top_ct_categories: formCategory.top_ct_categories.filter(el => el !== slug)
+                top_ct_categories: formCategory.top_ct_categories.filter(el => el !== slug),
+                top_ct_name_categories: formCategory.top_ct_name_categories.filter(el => el !== name)
             })
         }
         else {
             setFormCategory({
                 ...formCategory,
-                top_ct_categories: [...formCategory.top_ct_categories, slug]
+                top_ct_categories: [...formCategory.top_ct_categories, slug],
+                top_ct_name_categories: [...formCategory.top_ct_name_categories, name]
             })
         }
     }
@@ -160,7 +164,7 @@ const TopCategoriesManager = () => {
                     {
                         allCategories.length > 0 && allCategories.map((el, index) => (
                             <button className={`border  px-4 py-2 m-1 ${formCategory.top_ct_categories.includes(el.category_slug) ? 'border-gray-800' : ''}`} key={index}
-                                onClick={() => handlePickCategory(el.category_slug)}>{el.category_name}</button>
+                                onClick={() => handlePickCategory(el.category_slug, el.category_name)}>{el.category_name}</button>
                         ))
                     }
                     <h3 className="font-bold">Image:</h3>

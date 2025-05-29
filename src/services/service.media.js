@@ -25,9 +25,9 @@ const uploadManyImage = async (files) => {
   })
   return response.data
 }
-const getImgs = async () => {
+const getImgs = async (page) => {
   try {
-    const res = await axios.get('/api/media')
+    const res = await axios.get(`/api/media/${page}`)
     return res.data
   } catch (error) {
     console.error(error)

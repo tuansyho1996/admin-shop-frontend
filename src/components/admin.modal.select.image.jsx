@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useImageContext } from '../context/context.media';
 import { getImgs } from '../services/service.media';
 
 export default function ImagePickerModal({ open, onClose, onSelect, selImages = [], colors = [] }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [images, setImages] = useState([])
+  const [cPage, setCPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0)
   const handleSelectImage = (image) => {
     if (selectedImages.includes(image)) {
       setSelectedImages(selectedImages.filter((img) => img !== image));
@@ -22,17 +23,21 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages = 
   const handleClearSelection = () => {
     setSelectedImages([]);
   }
-
   useEffect(() => {
     fetchImages()
+  }
+    , [cPage]);
+  useEffect(() => {
+    // fetchImages()
     setSelectedImages(selImages)
   }, [selImages])
   const fetchImages = async () => {
-    const res = await getImgs()
-    setImages(res.metadata)
+    const res = await getImgs(cPage)
+    const { images, totalPages } = res.metadata
+    setImages(images)
+    setTotalPages(totalPages)
   }
 
-  console.log(colors)
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle className="flex justify-between items-center">
@@ -69,7 +74,7 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages = 
           ))}
         </ul>
         <div className="grid grid-cols-6 gap-4 p-4">
-          {images.map((image, index) => (
+          {images.length > 0 && images?.map((image, index) => (
             <div
               key={index}
               onClick={() => handleSelectImage(image.media_path)}
@@ -80,7 +85,27 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages = 
             </div>
           ))}
         </div>
+        <div className="flex justify-between mt-4">
+          <div className="flex gap-2 justify-center mt-4">
+            {[...Array(totalPages)].map((_, index) => {
+              const page = index + 1
+              const isActive = page === cPage
 
+              return (
+                <button
+                  key={page}
+                  onClick={() => {
+                    setCPage(page)
+                  }}
+                  className={`px-4 py-2 border rounded ${isActive ? 'bg-blue-500 text-white' : 'bg-white text-black'
+                    }`}
+                >
+                  {page}
+                </button>
+              )
+            })}
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );

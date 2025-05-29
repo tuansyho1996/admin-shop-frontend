@@ -13,6 +13,7 @@ import ReviewsIcon from '@mui/icons-material/Reviews';
 import OrderIcon from '@mui/icons-material/Checklist';
 import BlogIcon from '@mui/icons-material/Note';
 import HttpIcon from '@mui/icons-material/Http';
+import Tool from '@mui/icons-material/AutoFixHigh';
 
 export default function Navigate() {
   return (
@@ -34,7 +35,7 @@ export default function Navigate() {
             <ListItemText primary="Category" />
           </ListItem>
         </Link>
-        <Link to="/media" >
+        <Link to="/media/1" >
           <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
               <MediaIcon />
@@ -74,13 +75,20 @@ export default function Navigate() {
             <ListItemText primary="Blogs" />
           </ListItem>
         </Link>
-
         <Link to="/globals" >
           <ListItem className="hover:bg-gray-600 rounded-lg">
             <ListItemIcon>
               <HttpIcon />
             </ListItemIcon>
             <ListItemText primary="Globals" />
+          </ListItem>
+        </Link>
+        <Link to="/tool" >
+          <ListItem className="hover:bg-gray-600 rounded-lg">
+            <ListItemIcon>
+              <Tool />
+            </ListItemIcon>
+            <ListItemText primary="Tool" />
           </ListItem>
         </Link>
       </List>

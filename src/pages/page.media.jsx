@@ -4,8 +4,11 @@ import { Modal, Box, Button, Typography, IconButton } from '@mui/material';
 import { Add as AddIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { uploadImageToS3, getImgs, deleteImg, uploadManyImage } from '../services/service.media';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Media() {
+  const { page } = useParams();
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openDeleteMultipleModal, setOpenDeleteMultipleModal] = useState(false);
@@ -13,17 +16,24 @@ export default function Media() {
   const [images, setImages] = useState([]);
   const [isUploadMany, setIsUploadMany] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [pages, setPages] = useState(0)
+  const [cPages, setcPages] = useState(0)
+
 
   //Fetch Images
   useEffect(() => {
-    fetchImages()
-  }, [])
-  const fetchImages = async () => {
-    const res = await getImgs()
-    if (res?.status === 200) {
-      setImages(res.metadata)
+    const fetchImages = async () => {
+      const res = await getImgs(page)
+      if (res?.status === 200) {
+        const { images, totalPages, currentPage } = res.metadata
+        setImages(images)
+        setPages(totalPages)
+        setcPages(currentPage)
+      }
     }
-  }
+    fetchImages()
+  }, [page])
+
   // Modal handlers
   const handleCreateModalOpen = (type) => {
     if (type === 'upload multiple') {
@@ -38,7 +48,6 @@ export default function Media() {
     setIsUploadMany(false)
     setOpenCreateModal(false)
   };
-
   const handleDeleteModalOpen = (image) => {
     setSelectedImage(image);
     setOpenDeleteModal(true);
@@ -96,7 +105,6 @@ export default function Media() {
       setOpenDeleteMultipleModal(false);
     }
   };
-  console.log(selectedItems)
   return (
     <div className="p-6">
       <Typography variant="h4" gutterBottom>
@@ -236,6 +244,25 @@ export default function Media() {
           </div>
         </Box>
       </Modal>
+      <div className="flex justify-between mt-4">
+        <div className="flex gap-2 justify-center mt-4">
+          {[...Array(pages)].map((_, index) => {
+            const page = index + 1
+            const isActive = page === cPages
+
+            return (
+              <Link
+                key={page}
+                to={`/media/${page}`}
+                className={`px-4 py-2 border rounded ${isActive ? 'bg-blue-500 text-white' : 'bg-white text-black'
+                  }`}
+              >
+                {page}
+              </Link>
+            )
+          })}
+        </div>
+      </div>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import Reviews from './pages/page.reviews';
 import Orders from './pages/page.orders';
 import Blog from './pages/page.blog';
 import Global from './pages/page.global';
+import Tool from './pages/page.tool';
 export default function App() {
 
   return (
@@ -20,12 +21,13 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Product />} />
         <Route path="/category" element={<Category />} />
-        <Route path="/media" element={<Media />} />
+        <Route path="/media/:page" element={<Media />} />
         <Route path="/top-category" element={<TopCategoriesManager />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/blogs" element={<Blog />} />
         <Route path="/globals" element={<Global />} />
+        <Route path="/tool" element={<Tool />} />
         <Route path="*" element={<div>404 Not Found</div>} />  {/* Catch-all route for 404 */}
       </Routes>
       <ToastContainer />
