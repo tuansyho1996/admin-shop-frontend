@@ -7,18 +7,19 @@ import { getCategories } from '../services/service.category';
 import ImagePickerModal from '../components/admin.modal.select.image';
 
 const colors = [
-  { code: "bg-[#333333]", hex: "#333333" },
-  { code: "bg-[#2C3E50]", hex: "#2C3E50" },
-  { code: "bg-[#3B5323]", hex: "#3B5323" },
-  { code: "bg-[#4682B4]", hex: "#4682B4" },
-  { code: "bg-[#2F4F4F]", hex: "#2F4F4F" },
-  { code: "bg-[#8A3324]", hex: "#8A3324" },
-  { code: "bg-[#722F37]", hex: "#722F37" },
-  { code: "bg-[#2E4E3F]", hex: "#2E4E3F" },
-  { code: "bg-[#2A3439]", hex: "#2A3439" },
-  { code: "bg-[#505050]", hex: "#505050" },
+  { code: "bg-[#2C3E50]", hex: "#2C3E50" }, //
+  { code: "bg-[#4682B4]", hex: "#4682B4" }, //
+  { code: "bg-[#2F4F4F]", hex: "#2F4F4F" },//
+  { code: "bg-[#722F37]", hex: "#722F37" },//
+  { code: "bg-[#2E4E3F]", hex: "#2E4E3F" },//
+  { code: "bg-[#505050]", hex: "#505050" },//
   { code: "bg-[#000000]", hex: "#000000" },
   { code: "bg-[#ffffff]", hex: "#ffffff" },
+   { code: "bg-[#D3D3D3]", hex: "#D3D3D3" }, //
+  { code: "bg-[#E5E4E2]", hex: "#E5E4E2" }, //
+  { code: "bg-[#F7E7CE]", hex: "#F7E7CE" },//
+  { code: "bg-[#C4C3D0]", hex: "#C4C3D0" },//
+  { code: "bg-[#B0E0E6]", hex: "#B0E0E6" },//
 
 ]
 

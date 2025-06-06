@@ -64,7 +64,7 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages = 
       </div>
       <DialogContent>
         <p className='font-bold py-2'>Choose colors</p>
-        <ul className='grid grid-cols-12 gap-1 items-center justify-center'>
+        <ul className='sticky top-0 z-10 bg-white grid grid-cols-12 gap-1 items-center justify-center'>
           {colors.length > 0 && colors.map((color, inx) => (
             <div className='flex flex-col items-center' key={inx}>
               <li className={`border-2 cursor-pointer border-gray-200 bg-[${color}] w-8 h-5`}></li>
