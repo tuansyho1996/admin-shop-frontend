@@ -57,7 +57,7 @@ function KeywordReplacer() {
             {result && (
                 <div className="mt-4">
                     <h2 className="font-semibold">Kết quả:</h2>
-                    <div className="whitespace-pre-wrap p-2 border rounded bg-gray-100">{result}</div>
+                    <div className="whitespace-pre-wrap p-2 border rounded ">{result}</div>
                 </div>
             )}
         </div>
