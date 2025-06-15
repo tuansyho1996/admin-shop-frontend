@@ -4,7 +4,6 @@ const Reviews = () => {
     const [reviews, setReviews] = useState([]);
     const fetchReviews = async () => {
         const response = await getReviews();
-        console.log(response)
         setReviews(response);
     }
     useEffect(() => {

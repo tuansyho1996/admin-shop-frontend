@@ -64,7 +64,7 @@ export default function ProductManager() {
 
   // Reset form state
   const resetForm = () => {
-    setForm({ product_name: '', product_price: '', product_description: '', product_list_categories: [], product_images: [], product_colors: [], product_color_images: [] });
+    setForm({ product_name: '', product_slug: '', product_price: '', product_description: '', product_list_categories: [], product_images: [], product_colors: [], product_color_images: [] });
     setIsEditing(false);
     setCurrentProduct(null);
   };
@@ -91,7 +91,6 @@ export default function ProductManager() {
     setForm(product);
     handleOpen();
   };
-
   // // Update product
   // const handleUpdateProduct = async () => {
   //   const res = await updateProduct(form, currentProduct._id)

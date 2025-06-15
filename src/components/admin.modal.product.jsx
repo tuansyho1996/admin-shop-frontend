@@ -77,7 +77,7 @@ const ModalProduct = ({ open, onClose, isEditing, currentProduct, categories, fo
     }
     const res = await createProduct(form)
     if (res.status === 201) {
-      setProducts([{ ...form, _id: res.metadata._id }, ...products])
+      setProducts([{ ...form, _id: res.metadata._id, product_slug: res.metadata.product_slug }, ...products])
       onClose();
     }
   };
