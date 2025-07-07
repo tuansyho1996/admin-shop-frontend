@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { TextField, Button, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Modal } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-import { getProduct, createProduct, updateProduct, deleteProduct } from '../services/service.product';
+import { getProduct, createProduct, updateProduct, deleteProduct, getProductShop } from '../services/service.product';
 import { getCategories } from '../services/service.category';
 import ModalProduct from '../components/admin.modal.product';
 
@@ -13,6 +13,8 @@ export default function ProductManager() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [categories, setCategories] = useState([])
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
 
   // Product form state
   const [form, setForm] = useState({
@@ -27,8 +29,10 @@ export default function ProductManager() {
   });
   useEffect(() => {
     fetchCategories()
-    fetchAllProduct()
   }, [])
+  useEffect(() => {
+    fetchAllProduct()
+  }, [page])
   useEffect(() => {
     if (form?.product_images.length > 0) {
       const copyProductColorImages = [...form.product_color_images]
@@ -44,8 +48,9 @@ export default function ProductManager() {
     }
   }, [form.product_images])
   const fetchAllProduct = async () => {
-    const data = await getProduct()
-    setProducts(data)
+    const { products, totalPage } = await getProductShop(page)
+    setProducts(products)
+    setTotalPage(totalPage)
   }
   const fetchCategories = async () => {
     const data = await getCategories()
@@ -141,6 +146,26 @@ export default function ProductManager() {
 
       {/* Product List */}
       <div className="mt-4">
+        {totalPage > 1 && (
+          <div className="flex justify-center mt-6 space-x-2">
+            {Array.from({ length: totalPage }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => {
+                  setPage(i + 1);
+                  const section = document.getElementById("new-products");
+                  section?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className={`px-4 py-2 rounded ${page === i + 1
+                  ? `bg-black text-white`
+                  : "hover:bg-gray-300"
+                  }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+        )}
         {products?.length > 0 ? (
           <ul className="space-y-2">
             {products?.map(product => (
@@ -172,6 +197,26 @@ export default function ProductManager() {
           </ul>
         ) : (
           <p>No products available</p>
+        )}
+        {totalPage > 1 && (
+          <div className="flex justify-center mt-6 space-x-2">
+            {Array.from({ length: totalPage }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => {
+                  setPage(i + 1);
+                  const section = document.getElementById("new-products");
+                  section?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className={`px-4 py-2 rounded ${page === i + 1
+                  ? `bg-black text-white`
+                  : "hover:bg-gray-300"
+                  }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         )}
       </div>
 

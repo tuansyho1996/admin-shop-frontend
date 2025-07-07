@@ -26,7 +26,7 @@ export default function ImagePickerModal({ open, onClose, onSelect, selImages = 
   useEffect(() => {
     fetchImages()
   }
-    , [cPage]);
+    , [cPage, open]);
   useEffect(() => {
     // fetchImages()
     setSelectedImages(selImages)

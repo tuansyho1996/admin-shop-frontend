@@ -6,6 +6,7 @@ import { uploadImageToS3, getImgs, deleteImg, uploadManyImage } from '../service
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import ModalUpload from '../components/media/media.modal.upload';
 
 export default function Media() {
   const { page } = useParams();
@@ -54,30 +55,7 @@ export default function Media() {
   };
   const handleDeleteModalClose = () => setOpenDeleteModal(false);
 
-  // Handle image creation
-  const handleCreateImage = async (event) => {
-    event.preventDefault();
-    if (!isUploadMany) {
-      const fileInput = event.target.image.files[0];
-      if (fileInput) {
-        const res = await uploadImageToS3(fileInput)
-        if (res?.status === 201) {
-          setImages((prevImages) => [res.metadata, ...prevImages]);
-          handleCreateModalClose();
-        }
-      }
-    }
-    else {
-      const fileImages = Array.from(event.target.images.files)
-      if (fileImages) {
-        const res = await uploadManyImage(fileImages)
-        if (res?.status === 201) {
-          setImages((prevImages) => [...res.metadata, ...prevImages]);
-          handleCreateModalClose();
-        }
-      }
-    }
-  };
+
 
   // Handle image deletion
   const handleDeleteImage = async () => {
@@ -127,8 +105,8 @@ export default function Media() {
       {/* List of Images */}
       <div className="grid grid-cols-12 gap-4 gap-4 mt-6">
         {images?.length === 0 && <Typography>No images uploaded yet.</Typography>}
-        {images?.map((image) => (
-          <div>
+        {images?.map((image, index) => (
+          <div key={index}>
             <input
               type="checkbox"
               id={image.media_name}
@@ -157,51 +135,13 @@ export default function Media() {
       </div>
 
       {/* Create Image Modal */}
-      <Modal open={openCreateModal} onClose={handleCreateModalClose}>
-        {
-          !isUploadMany
-            ?
-            <Box className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-lg w-full max-w-md">
 
-              <Typography variant="h6" gutterBottom>
-                Upload New Image
-              </Typography>
-              <form onSubmit={handleCreateImage}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  name="image"
-                  className="block w-full border border-gray-300 rounded p-2"
-                  required
-                />
-                <Button type="submit" sx={{ marginTop: '10px' }} variant="contained" color="primary" className="mt-4">
-                  Upload
-                </Button>
-              </form>
-            </Box>
-            :
-            <Box className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-lg w-full max-w-md">
-
-              <Typography variant="h6" gutterBottom>
-                Upload Many Image
-              </Typography>
-              <form onSubmit={handleCreateImage}>
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  name="images"
-                  className="block w-full border border-gray-300 rounded p-2"
-                  required
-                />
-                <Button type="submit" sx={{ marginTop: '10px' }} variant="contained" color="primary" className="mt-4">
-                  Upload Many Image
-                </Button>
-              </form>
-            </Box>
-        }
-
-      </Modal>
+      <ModalUpload
+        open={openCreateModal}
+        onClose={handleCreateModalClose}
+        isUploadMany={isUploadMany}
+        setImages={setImages}
+      />
 
       {/* Delete Confirmation Modal */}
       <Modal open={openDeleteModal} onClose={handleDeleteModalClose}>

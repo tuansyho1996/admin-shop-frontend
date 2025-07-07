@@ -8,6 +8,18 @@ const getProduct = async (id = 'all') => {
     console.log(error)
   }
 }
+const getProductShop = async (page = 1) => {
+  try {
+    const query = new URLSearchParams({ page }).toString();
+    const response = await axios.get(`/api/product/shop?${query}`)
+    if (!response.status === 200) {
+      return null
+    }
+    return response.data.metadata
+  } catch (error) {
+    console.error(error)
+  }
+}
 const createProduct = async (data) => {
   try {
     const response = await axios.post('/api/product', data)
@@ -36,5 +48,6 @@ export {
   getProduct,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getProductShop
 }
