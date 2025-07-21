@@ -150,6 +150,17 @@ const TopCategoriesManager = () => {
             {/* Dialog for Add/Edit */}
             <Dialog open={openDialog} onClose={handelCloseDialog} fullWidth>
                 <DialogTitle>{isEdit ? "Edit Category" : "Add Category"}</DialogTitle>
+                <Button
+                    onClick={() => {
+                        setFormCategory({
+                            ...formCategory,
+                            top_ct_categories: [],
+                            top_ct_name_categories: [],
+                        })
+                    }}
+                >
+                    Clear categories
+                </Button>
                 <DialogContent>
                     <TextField
                         autoFocus

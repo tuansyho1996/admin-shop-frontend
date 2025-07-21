@@ -8,6 +8,18 @@ const getProduct = async (id = 'all') => {
     console.log(error)
   }
 }
+const getProductsByCategory = async (category, page = 1) => {
+  try {
+    const query = new URLSearchParams({ page }).toString();
+    const response = await axios.get(`/api/product-category/${category}?${query}`)
+    if (!response.status === 200) {
+      return null
+    }
+    return response.data.metadata
+  } catch (error) {
+    console.error(error)
+  }
+}
 const getProductShop = async (page = 1) => {
   try {
     const query = new URLSearchParams({ page }).toString();
@@ -44,10 +56,22 @@ const deleteProduct = async (id) => {
     console.log(error)
   }
 }
+const convertPricesToEth = async () => {
+  try {
+    const response = await axios.get('/api/product/convert-prices-to-eth')
+    return response.data
+  } catch (error) {
+    console.error('Error converting prices:', error)
+    throw error
+  }
+}
+
 export {
   getProduct,
   createProduct,
   updateProduct,
   deleteProduct,
-  getProductShop
+  getProductShop,
+  convertPricesToEth,
+  getProductsByCategory
 }

@@ -17,7 +17,7 @@ th,
 tr {
     border: 1px solid #ffffff;
     background-color: #353839;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 label {

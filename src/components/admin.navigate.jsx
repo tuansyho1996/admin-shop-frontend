@@ -91,6 +91,15 @@ export default function Navigate() {
             <ListItemText primary="Tool" />
           </ListItem>
         </Link>
+        <Link to="/best-seller" >
+          <ListItem className="hover:bg-gray-600 rounded-lg">
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Best Seller" />
+          </ListItem>
+        </Link>
+
       </List>
     </div>
   );

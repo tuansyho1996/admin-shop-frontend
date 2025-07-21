@@ -13,6 +13,7 @@ import Orders from './pages/page.orders';
 import Blog from './pages/page.blog';
 import Global from './pages/page.global';
 import Tool from './pages/page.tool';
+import BestSeller from './pages/page.manager.bestseller';
 export default function App() {
 
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/blogs" element={<Blog />} />
         <Route path="/globals" element={<Global />} />
         <Route path="/tool" element={<Tool />} />
+        <Route path="/best-seller" element={<BestSeller />} />
         <Route path="*" element={<div>404 Not Found</div>} />  {/* Catch-all route for 404 */}
       </Routes>
       <ToastContainer />

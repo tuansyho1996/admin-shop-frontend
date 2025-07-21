@@ -33,45 +33,39 @@ const ModalProduct = ({ open, onClose, isEditing, currentProduct, categories, fo
   // Add new product
   const addProduct = async () => {
     if (!form.product_price) {
-      if (['unisex', 'hoodie'].every(val => form.product_list_categories.includes(val))) {
+      if (['hoodie'].every(val => form.product_list_categories.includes(val))) {
         form.product_price = 49.99;
+        form.product_price_eth = 0.018515
       }
-      else if (['unisex', 'zip-hoodie'].every(val => form.product_list_categories.includes(val))) {
+      else if (['zip-hoodie'].every(val => form.product_list_categories.includes(val))) {
         form.product_price = 51.99;
+        form.product_price_eth = 0.019256;
       }
-      else if (['unisex', 'hooded-vest'].every(val => form.product_list_categories.includes(val))) {
+      else if (['hooded-vest'].every(val => form.product_list_categories.includes(val))) {
         form.product_price = 46.99;
+        form.product_price_eth = 0.017404;
       }
-      else if (['unisex', 'sweatshirt'].every(val => form.product_list_categories.includes(val))) {
+      else if (['sweatshirt'].every(val => form.product_list_categories.includes(val))) {
         form.product_price = 46.99;
+        form.product_price_eth = 0.017404;
       }
-      else if (['unisex', 'pant'].every(val => form.product_list_categories.includes(val))) {
+      else if (['pant'].every(val => form.product_list_categories.includes(val))) {
         form.product_price = 44.99;
+        form.product_price_eth = 0.016663;
       }
-      else if (['unisex', 'short-pant'].every(val => form.product_list_categories.includes(val))) {
+      else if (['short-pant'].every(val => form.product_list_categories.includes(val))) {
         form.product_price = 39.99;
+        form.product_price_eth = 0.014999;
       }
-      else if (['men', 't-shirt'].every(val => form.product_list_categories.includes(val))) {
+      else if ([`men's-t-shirt`].every(val => form.product_list_categories.includes(val))) {
         form.product_price = 25.99;
+        form.product_price_eth = 0.009626;
       }
-      else if (['women', 't-shirt'].every(val => form.product_list_categories.includes(val))) {
+      else if ([`women's-t-shirt`].every(val => form.product_list_categories.includes(val))) {
         form.product_price = 25.99;
+        form.product_price_eth = 0.009626;
       }
-      else if (['kid', 't-shirt'].every(val => form.product_list_categories.includes(val))) {
-        form.product_price = 25.99;
-      }
-      else if (['kid', 'hoodie'].every(val => form.product_list_categories.includes(val))) {
-        form.product_price = 35.99;
-      }
-      else if (['kid', 'zip-hoodie'].every(val => form.product_list_categories.includes(val))) {
-        form.product_price = 37.99;
-      }
-      else if (['kid', 'pant'].every(val => form.product_list_categories.includes(val))) {
-        form.product_price = 34.99;
-      }
-      else if (['kid', 'sweatshirt'].every(val => form.product_list_categories.includes(val))) {
-        form.product_price = 32.99;
-      } else {
+      else {
         return alert('Please select a category or set a price for the product');
       }
     }
@@ -112,7 +106,7 @@ const ModalProduct = ({ open, onClose, isEditing, currentProduct, categories, fo
     }
   }
   const handleClickPrimaryColor = () => {
-    const colors = ['#4682B4', '#722F37', '#ffffff', '#2C3E50', '#2F4F4F', '#2E4E3F', '#505050'];
+    const colors = ['#4682B4', '#722F37', '#2C3E50', '#2F4F4F', '#2E4E3F', '#505050'];
     setForm({ ...form, product_colors: colors });
   }
   const handleClickLightColor = () => {

@@ -5,6 +5,7 @@ import { Delete, Edit } from '@mui/icons-material';
 import { getProduct, createProduct, updateProduct, deleteProduct, getProductShop } from '../services/service.product';
 import { getCategories } from '../services/service.category';
 import ModalProduct from '../components/admin.modal.product';
+import ModalAddProductsAllCategories from '../components/admin.modal.add.product.all.categories';
 
 
 export default function ProductManager() {
@@ -15,6 +16,7 @@ export default function ProductManager() {
   const [categories, setCategories] = useState([])
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  const [isModalAddProductsAll, setIsModalAddProductsAll] = useState(false);
 
   // Product form state
   const [form, setForm] = useState({
@@ -143,6 +145,9 @@ export default function ProductManager() {
       <Button variant="contained" color="primary" onClick={handleOpen}>
         Add Product
       </Button>
+      <Button onClick={() => setIsModalAddProductsAll(true)} variant="contained" color="secondary" sx={{ marginLeft: '10px' }} >
+        Add Products For All Categories
+      </Button>
 
       {/* Product List */}
       <div className="mt-4">
@@ -171,7 +176,8 @@ export default function ProductManager() {
             {products?.map(product => (
               <li key={product._id} className="flex justify-between items-center p-2 rounded">
                 <div>
-                  <span className="font-semibold">{product.product_name}</span> - ${product.product_price}
+                  <span className="font-semibold">{product.product_name}</span>
+                  <p>${product.product_price}</p>
                   <p>{product.product_description}</p>
                   <div className="grid grid-cols-6 gap-4 p-4">
                     {product.product_images.length > 0 && product.product_images?.map((image, index) => (
@@ -231,6 +237,12 @@ export default function ProductManager() {
         categories={categories}
         setProducts={setProducts}
         products={products}
+      />
+      <ModalAddProductsAllCategories
+        isOpen={isModalAddProductsAll}
+        onClose={() => setIsModalAddProductsAll(false)}
+        products={products}
+        setProducts={setProducts}
       />
     </div>
   );

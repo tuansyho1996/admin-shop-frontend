@@ -57,7 +57,6 @@ const ModalUpload = ({ open, onClose, isUploadMany, setImages }) => {
                 !isUploadMany
                     ?
                     <Box className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-lg w-full max-w-md">
-
                         <Typography variant="h6" gutterBottom>
                             Upload New Image
                         </Typography>

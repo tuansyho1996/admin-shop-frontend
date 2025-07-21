@@ -33,6 +33,15 @@ const getImgs = async (page) => {
     console.error(error)
   }
 }
+const getImageByName = async (name, limit) => {
+  try {
+    const res = await axios.get(`/api/media/name/?name=${name}&limit=${limit}`)
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const deleteImg = async (name) => {
   try {
     const res = await axios.delete(`/api/media/${name}`)
@@ -41,18 +50,33 @@ const deleteImg = async (name) => {
     console.error(error)
   }
 }
-const deleteMultipleImages = async (name) => {
+const deleteMultipleImages = async (names) => {
   try {
-    const res = await axios.delete(`/api/media/multiple`)
+    const res = await axios.delete(`/api/media/multiple`,
+      {
+        data: { names }
+      }
+    )
     return res.data
   } catch (error) {
     console.error(error)
   }
 }
-
+const removeProductFromBestSeller = async (productId) => {
+  try {
+    const res = await axios.delete(`/api/product/best-seller/${productId}`)
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
+  return null
+}
 export {
   uploadManyImage,
   uploadImageToS3,
   getImgs,
-  deleteImg
+  deleteImg,
+  getImageByName,
+  deleteMultipleImages,
+  removeProductFromBestSeller
 }
