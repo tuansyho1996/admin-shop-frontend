@@ -205,7 +205,7 @@ export default function Media() {
                 </div>
               </div>
               <button
-                onClick={() => handleCopy(image.media_name)}
+                onClick={() => handleCopy(image.media_path)}
                 className="px-2 py-1 mt-1 text-white bg-blue-500 rounded hover:bg-blue-600"
               >
                 Copy url
