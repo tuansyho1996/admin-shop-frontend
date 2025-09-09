@@ -168,7 +168,7 @@ const ModalProduct = ({ open, onClose, isEditing, currentProduct, categories, fo
         <p className='font-bold py-2'>Choose categories</p>
         <ul className='grid grid-cols-3 gap-2 items-center justify-center'>
           {categories.length > 0 && categories.map((category, inx) => (
-            <li className={`border-2 cursor-pointer ${form.product_list_categories.includes(category.category_slug) ? 'border-black' : 'border-gray-200'} `} key={inx}
+            <li className={`border-2 cursor-pointer ${form.product_list_categories.includes(category.category_slug) ? 'border-red-500' : 'border-gray-200'} `} key={inx}
               onClick={() => handleSelectCategory(category.category_slug)}
             >{category.category_slug}</li>
           ))}
@@ -181,7 +181,7 @@ const ModalProduct = ({ open, onClose, isEditing, currentProduct, categories, fo
           <li className='border px-1' onClick={handleClickDarkColor}>combo dark</li>
           {colors.map((color, inx) => (
             <div className='flex flex-col items-center justify-center ' key={inx}>
-              <li className={`border-2 cursor-pointer ${form.product_colors.includes(color.hex) ? 'border-black' : 'border-gray-200'} ${color.code} w-16 h-5`}
+              <li className={`border-2 cursor-pointer ${form.product_colors.includes(color.hex) ? 'border-red-500' : 'border-gray-200'} ${color.code} w-16 h-5`}
                 onClick={() => handleSelectColor(color.hex)}
               ></li>
               <p className='text-xs'>{color.hex}</p>
